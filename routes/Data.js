@@ -4,10 +4,10 @@ const Data = require('../models/Data');
 
 router.post('/', async (req,res)=>{
 
-    const { sap_Id, name, contact_no, year_join, year_passed, profile_pic } = await req.body ;
+    const { sap_Id, name, contact_no, year_join, year_passed, profile_pic, contribution, academic_cgpa} = await req.body ;
     try{
 
-        const data = await Data.create({ sap_Id, name, contact_no, year_join, year_passed, profile_pic })
+        const data = await Data.create({ sap_Id, name, contact_no, year_join, year_passed, profile_pic, contribution, academic_cgpa })
         res.status(200).send("Data saved successfully !!");
 
     }catch(err){
