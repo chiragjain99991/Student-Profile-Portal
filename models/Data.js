@@ -25,6 +25,30 @@ const userSchema = new mongoose.Schema(
           profile_pic:{
             type: String,
             default: "",
+          },
+          contribution:{
+            type: String,
+            default: "",
+          },
+          academic_cgpa:{
+            type:Array,
+            default:[]
+          },
+          cultural_activities:{
+            type:String,
+            default:""
+          },
+          sports_activities:{
+            type:String,
+            default:""
+          },
+          NSS_activities:{
+            type:String,
+            default:""
+          },
+          internships:{
+            type:Array,
+            default:[]
           }
 
     },
