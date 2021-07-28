@@ -5,7 +5,7 @@ const Internship = require('../models/internships')
 
 router.post('/', async (req,res)=>{
 
-    const { sap_Id, name, contact_no, year_join, year_passed, profile_pic, contribution, academic_cgpa,internships} = await req.body ;
+    const { sap_Id, name, contact_no, year_join, year_passed, profile_pic, contribution, academic_cgpa,internships, cultural_activities, sports_activities, NSS_activities} = await req.body ;
 
     try{
 
@@ -25,7 +25,7 @@ router.post('/', async (req,res)=>{
             
         })
 
-        const data = await Data.create({ sap_Id, name, contact_no, year_join, year_passed, profile_pic, contribution, academic_cgpa, internshipsArray })
+        const data = await Data.create({ sap_Id, name, contact_no, year_join, year_passed, profile_pic, contribution, academic_cgpa, cultural_activities, sports_activities, NSS_activities, internshipsArray })
         res.status(200).send("Data saved successfully !!");
 
     }catch(err){
