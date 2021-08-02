@@ -68,7 +68,7 @@ const sendEmail = (req,email,uniqueString) => {
 router.post("/register",async(req,res)=>{
   
     const {email,password,sap_Id} = req.body;
-    User.findOne({ sap_Id: req.body.sap_Id }, function (err, user) {
+    User.findOne({ sap_Id: req.body.sap_Id }, async function (err, user) {
         // error occur
         if(err){
             return res.status(500).send({msg: err.message});

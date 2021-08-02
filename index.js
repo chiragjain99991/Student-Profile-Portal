@@ -31,6 +31,6 @@ app.get("/",(req,res)=>{
 app.use("/data",dataRoute);
 app.use("/user",authRoute);
 
-app.listen(process.env.PORT || 8800, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log("server started at 3000");
   });
