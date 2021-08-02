@@ -55,7 +55,7 @@ const sendEmail = (req,email,uniqueString) => {
     var mailOption,host,link;
     var sender= "chiragjain55551@gmail.com";
     host=req.get('host');
-    link="http://"+req.get('host')+"/user/verify/"+uniqueString;
+    link="https://profiledataform.herokuapp.com/user/verify/"+uniqueString;
     mailOption = {
         from : sender,
         to : email,
