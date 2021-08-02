@@ -10,6 +10,22 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "",
           },
+          email: {
+            type: String,
+            default: "",
+          },
+          uniqueString:{
+            type: String,
+            default: "",
+          },
+          isValid:{
+            type: Boolean,
+            default: false,
+          },
+          password: {
+            type: String,
+            default: "",
+          },
           contact_no: {
             type: String,
             default: "",

@@ -4,6 +4,7 @@ let cookieParser = require("cookie-parser");
 let cors = require("cors");
 let mongoose = require("mongoose");
 let dataRoute = require('./routes/Data')
+let authRoute = require("./routes/auth")
 
 
 mongoose.connect(
@@ -28,6 +29,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/data",dataRoute);
+app.use("/user",authRoute);
 
 app.listen(process.env.PORT || 8800, () => {
     console.log("server started at 3000");
