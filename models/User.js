@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
     {
@@ -70,6 +71,38 @@ const userSchema = new mongoose.Schema(
     },
     { timestamps: true }
 )
+
+// userSchema.pre("save", async function (next) {
+   
+//   const salt = await bcrypt.genSalt();
+//   this.password = await bcrypt.hash(this.password, salt);
+//   next();
+
+// })
+
+userSchema.statics.login = async function (sap_Id, password) {
+  const user = await this.findOne({ sap_Id });
+  // console.log(user)
+  if (user) {
+    if(user.isValid){
+
+      const validPassword = await bcrypt.compare(password, user.password);
+      if (validPassword) {
+        return user;
+      } else {
+        throw Error("password incorrect");
+      }
+
+    }else{
+      throw Error("Email is not verified yet");
+    }
+
+  } else {
+    throw Error("user not found");
+  }
+};
+
+
 
 const user = mongoose.model('User',userSchema);
 
