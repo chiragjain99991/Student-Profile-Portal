@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "",
           },
+          linkedin: {
+            type: String,
+            default: "",
+          },
           year_join:{
             type: String,
             default: "",
@@ -66,6 +70,22 @@ const userSchema = new mongoose.Schema(
           internshipsArray:{
             type:Array,
             default:[]
+          },
+          projectArray:{
+            type:Array,
+            default:[]
+          },
+          achievementsArray:{
+            type:Array,
+            default:[]
+          },
+          publicationArray:{
+            type:Array,
+            default:[]
+          },
+          further_contributions:{
+            type:String,
+            default:""
           }
 
     },

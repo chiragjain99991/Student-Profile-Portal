@@ -1,34 +1,30 @@
 const mongoose = require("mongoose");
 
-const internshipSchema = new mongoose.Schema(
+const publicationSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       default: "",
     },
-    role:{
+    publication:{
       type: String,
       default: "",
     },
-    description: {
+    author: {
       type: String,
       default: "",
     },
-    proof_link: {
+    conference: {
       type: String,
       default: "",
     },
-    start_date: {
-      type: String,
-      default: "",
-    },
-    end_date: {
+    year: {
       type: String,
       default: "",
     },
   },
   { timestamps: true }
 );
-const internship = mongoose.model("Internship", internshipSchema);
+const publication = mongoose.model("Publication", publicationSchema);
 
-module.exports = internship;
+module.exports = publication;
