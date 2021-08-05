@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const achievementSchema = new mongoose.Schema(
   {
-    title: {
-        type: String,
-        default: "",
-    },
     description: {
       type: String,
       default: "",

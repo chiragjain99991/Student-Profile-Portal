@@ -117,14 +117,14 @@ router.post('/', requireAuth, async (req,res)=>{
 
         let achievementsArray = [];
         achievements.map( async (achievement)=>{
-            const { title, description, proof_link } = achievement;
+            const {  description, proof_link } = achievement;
             if(achievement._id){
               achievementsArray.push(achievement._id);
-                const data = { title, description, proof_link }
+                const data = {  description, proof_link }
                 const res = await Achievement.findOneAndUpdate({_id:achievement._id},{$set:data},{ returnDocument: 'after' })
 
             } else {
-              const res = new Achievement({title, description, proof_link })
+              const res = new Achievement({ description, proof_link })
               achievementsArray.push(res._id);
               await res.save();
             }

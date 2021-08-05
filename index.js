@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.get("/",(req,res)=>{
-    res.send("hello welcome")
+    res.send("Your email is verified. You can go ahead with log in.")
 })
 
 app.use("/data",dataRoute);
