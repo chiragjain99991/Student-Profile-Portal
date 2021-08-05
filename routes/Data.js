@@ -59,7 +59,9 @@ router.post('/', requireAuth, async (req,res)=>{
           } = await req.body ;
     let user = req.user
 
-    try{
+    if(user.sap_Id === sap_Id){
+
+      try{
 
         let internshipsArray = [];
         internships.map( async (internship)=>{
@@ -140,22 +142,6 @@ router.post('/', requireAuth, async (req,res)=>{
 
         const data = await Data.findOneAndUpdate({sap_Id:sap_Id},{$set:userData},{ returnDocument: 'after' })
         console.log(data)
-        // data.internshipsArray = internshipsArray
-        // data.projectArray = projectArray
-        // data.publicationArray = publicationArray
-        // data.achievementsArray = achievementsArray
-        // await data.save();
-
-
-
-        // const data = await Data.create({ sap_Id, name, contact_no, 
-        //                                  linkedin, year_join, year_passed, 
-        //                                  profile_pic, contribution, academic_cgpa, 
-        //                                  cultural_activities, sports_activities, 
-        //                                  NSS_activities, internshipsArray,
-        //                                  projectArray, achievementsArray, publicationArray,
-        //                                  further_contributions
-        //                                })
         res.status(200).send("Data saved successfully !!");
 
     }catch(err){
@@ -163,6 +149,10 @@ router.post('/', requireAuth, async (req,res)=>{
     console.log(err);
     res.status(500).send(err);
 
+    }
+
+    }else{
+      res.status(500).send("User can only change his/her data")
     }
 
 })

@@ -142,7 +142,7 @@ router.post("/login",async (req,res) => {
         const { password, sap_Id } = req.body;
         const user = await User.login(sap_Id, password);
         const token = createToken(user._id);
-        res.status(200).send({ token: token, user: user });
+        res.status(200).send({ token: token });
       } catch (err) {
         res.status(400).send(err.message);
       }
