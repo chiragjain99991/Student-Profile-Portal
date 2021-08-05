@@ -68,7 +68,7 @@ const sendEmail = (req,email,uniqueString) => {
         if(err) {
             console.log(err)
         } else {
-            console.log("Message sent")
+            res.status(200).send("Email Sent")
         }
     })
 }
