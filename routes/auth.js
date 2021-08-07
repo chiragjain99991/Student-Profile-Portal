@@ -210,7 +210,10 @@ router.post("/forgot-password", async (req,res) => {
         await user.save();
         console.log(user)
         sendOtp(user.email,otp)
-        res.status(200).send("OTP HAS BEEN SENT TO YOUR REGISTERED EMAIL ID")
+        res.status(200).send({
+            message:"OTP HAS BEEN SENT TO YOUR REGISTERED EMAIL ID",
+            email:user.email
+        })
         
     } else {
         res.status(500).send("User not found")
