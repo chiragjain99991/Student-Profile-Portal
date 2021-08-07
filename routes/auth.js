@@ -6,6 +6,7 @@ const OAuth2 = google.auth.OAuth2;
 const User = require("../models/User")
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+let { requireAuth } = require("../middlewares/userMiddleware");
 
 
 const oauth2Client = new OAuth2(
@@ -18,6 +19,16 @@ oauth2Client.setCredentials({
     refresh_token: "1//04LNCj3Zi791OCgYIARAAGAQSNwF-L9Ir1X1rRCzlqI64Q_kJgOJOroYjZeh53KW997zD7OEa5x3rYqC75yPgIxHdlOq2ehIG6qI"
 });
 const accessToken = oauth2Client.getAccessToken()
+
+const generateOtp=()=>{
+    const len = 5
+    let randStr = ''
+    for(let i=0;i<len;i++){
+        const ch = Math.floor((Math.random()*10)+1)
+        randStr += ch
+    }
+    return randStr;
+}
 
 const generateString=()=>{
     const len = 8
@@ -35,6 +46,45 @@ const createToken = (Id) => {
     return jwt.sign({Id},"profile portal project",{
         expiresIn: maxAge,
       });
+}
+
+const sendOtp = (email,otp) => {
+
+
+    var smtpTransport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+             type: "OAuth2",
+             user: "chiragjain55551@gmail.com", 
+             clientId: "395033379952-57fhpv4j4p3qt5agl4nom1780c80khgp.apps.googleusercontent.com",
+             clientSecret: "NxaNI-apmrn6na0gO6lF57j9",
+             refreshToken: "1//04LNCj3Zi791OCgYIARAAGAQSNwF-L9Ir1X1rRCzlqI64Q_kJgOJOroYjZeh53KW997zD7OEa5x3rYqC75yPgIxHdlOq2ehIG6qI",
+             accessToken: accessToken
+        },
+        tls: {
+            rejectUnauthorized: false
+          }
+    });
+    var mailOption,host,link;
+    var sender= "chiragjain55551@gmail.com";
+    
+    
+    mailOption = {
+        from : sender,
+        to : email,
+        subject: "OTP Verifications",
+        generateTextFromHTML: true,
+        html: `YOUR OTP IS ${otp}`
+    }
+
+    smtpTransport.sendMail(mailOption, function(err, res){
+        if(err) {
+            res.status(500).send(err.message)
+        } else {
+            res.status(200).send("OTP HAS BEEN SENT TO YOUR REGISTERED EMAIL ID")
+        }
+    })
+
 }
 
 const sendEmail = (req,email,uniqueString) => {
@@ -146,6 +196,81 @@ router.post("/login",async (req,res) => {
       } catch (err) {
         res.status(400).send(err.message);
       }
+})
+
+
+router.post("/forgot-password", async (req,res) => {
+    const { sap_Id } = req.body
+    const user = await User.findOne({sap_Id:sap_Id})
+    
+    if(user){
+        var otp = generateOtp();
+        user.otp = otp;
+        user.otpTimeLimit = Date.now();
+        await user.save();
+        console.log(user)
+        sendOtp(user.email,otp)
+        res.status(200).send("OTP HAS BEEN SENT TO YOUR REGISTERED EMAIL ID")
+        
+    } else {
+        res.status(500).send("User not found")
+    }
+
+    
+})
+
+router.post("/check-otp", async (req,res) => {
+    const { sap_Id,otp } = req.body
+    const user = await User.findOne({sap_Id:sap_Id})
+    
+    if(user){
+         
+        if(user.otp === otp){
+            const millis = Date.now() - user.otpTimeLimit
+            const seconds = Math.floor(millis / 1000)
+            if(Number(seconds) < 120){
+                user.otp = '';
+                user.otpTimeLimit = Date.now();
+                await user.save();
+                res.status(200).send("You can go ahead and change password")
+            } else {
+                res.status(500).send("OTP got expired !")
+            }
+        } else {
+            res.status(500).send("Invalid OTP")
+        }
+         
+    }  else {
+        res.status(500).send("User not found")
+    }
+
+    // if(email === user.email){
+
+    //     var otp = generateOtp();
+    //     user.otp = otp;
+    //     user.otpTimeLimit = Date.now();
+    //     await user.save()
+
+    // } else {
+    //     res.status(500).send("Invalid Email Address")
+    // }
+})
+
+
+router.post("/change-password",async (req,res)=>{
+    const { sap_Id, newPassword } = req.body
+    const user = await User.findOne({sap_Id:sap_Id})
+    
+    if(user){
+        const salt = await bcrypt.genSalt();
+        const newpassword = await bcrypt.hash(newPassword, salt);
+        user.password = newpassword
+        await user.save();
+        res.status(200).send("Password Changed Successfully !!")
+    }  else {
+        res.status(500).send("User not found")
+    }
+
 })
 
 module.exports = router;

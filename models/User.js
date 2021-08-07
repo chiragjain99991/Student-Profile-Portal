@@ -27,6 +27,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "",
           },
+          otp: {
+            type: String,
+            default: "",
+          },
+          otpTimeLimit: {
+            type: Date,
+            default: Date.now,
+          },
           contact_no: {
             type: String,
             default: "",
