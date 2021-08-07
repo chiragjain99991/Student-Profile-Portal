@@ -212,7 +212,7 @@ router.post("/forgot-password", async (req,res) => {
         sendOtp(user.email,otp)
         res.status(200).send({
             message:"OTP HAS BEEN SENT TO YOUR REGISTERED EMAIL ID",
-            email:user.email
+            sap_Id:user.sap_Id
         })
         
     } else {
