@@ -10,7 +10,24 @@ let { requireAuth } = require("../middlewares/userMiddleware");
 
 router.get('/', requireAuth, async(req,res)=>{
 
-    const {sap_Id, name, contact_no, year_join, 
+    if(req.user.isAdmin){
+       
+      const allData = []
+      const data = await Data.find({ isAdmin: { $ne: true }})
+      data.map( async (user)=>{
+            const {sap_Id, name, contact_no, year_join, year_passed, profile_pic} = user;
+
+            
+              allData.push({ sap_Id, name, contact_no, year_join, 
+                year_passed, profile_pic});
+          
+        })
+          res.status(200).send(allData);
+       
+      
+
+    } else {
+      const {sap_Id, name, contact_no, year_join, 
         year_passed, profile_pic, contribution, 
         academic_cgpa,internshipsArray, projectArray, cultural_activities, 
         sports_activities, NSS_activities, linkedin, achievementsArray,
@@ -45,6 +62,11 @@ router.get('/', requireAuth, async(req,res)=>{
         sports_activities, NSS_activities, linkedin, achievements,
         publications, further_contributions
       })
+    }
+
+     
+
+ 
       
 
 })
