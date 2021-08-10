@@ -13,7 +13,7 @@ router.get('/', requireAuth, async(req,res)=>{
     if(req.user.isAdmin){
        
       const allData = []
-      const data = await Data.find({ isAdmin: { $ne: true }})
+      const data = await Data.find({ isAdmin: { $ne: true }},null,{sort:{'sap_Id':1}})
       data.map( async (user)=>{
             const {sap_Id, name, contact_no, year_join, year_passed, profile_pic} = user;
 
