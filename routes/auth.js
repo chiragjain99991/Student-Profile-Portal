@@ -7,6 +7,7 @@ const User = require("../models/User")
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 let { requireAuth } = require("../middlewares/userMiddleware");
+var otpGenerator = require('otp-generator')
 
 
 const oauth2Client = new OAuth2(
@@ -17,15 +18,6 @@ const oauth2Client = new OAuth2(
 
 
 
-const generateOtp=()=>{
-    const len = 5
-    let randStr = ''
-    for(let i=0;i<len;i++){
-        const ch = Math.floor((Math.random()*10)+1)
-        randStr += ch
-    }
-    return randStr;
-}
 
 const generateString=()=>{
     const len = 8
@@ -213,7 +205,7 @@ router.post("/forgot-password", async (req,res) => {
     const user = await User.findOne({sap_Id:sap_Id})
     
     if(user){
-        var otp = generateOtp();
+        var otp = otpGenerator.generate(6, { alphabets: false, upperCase: false, specialChars: false });
         user.otp = otp;
         user.otpTimeLimit = Date.now();
         await user.save();

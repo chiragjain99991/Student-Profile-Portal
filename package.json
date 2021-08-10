@@ -17,6 +17,7 @@
     "googleapis": "^83.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.3",
-    "nodemailer": "^6.6.3"
+    "nodemailer": "^6.6.3",
+    "otp-generator": "^2.0.1"
   }
 }
