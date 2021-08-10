@@ -145,7 +145,7 @@ router.post("/register",async(req,res)=>{
                 const isValid = false;
                 const salt = await bcrypt.genSalt();
                 const newPassword = await bcrypt.hash(password, salt);
-                const newUser = new User({uniqueString, email,isValid,password:newPassword,sap_Id, isAdmin:true});
+                const newUser = new User({uniqueString, email,isValid,password:newPassword,sap_Id});
                 await newUser.save();
                 // console.log(newUser)
                 sendEmail(req,email,uniqueString);
