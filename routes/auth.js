@@ -15,10 +15,7 @@ const oauth2Client = new OAuth2(
     "https://developers.google.com/oauthplayground" // Redirect URL
 );
 
-oauth2Client.setCredentials({
-    refresh_token: "1//04_Ad94FZfZmSCgYIARAAGAQSNwF-L9IrJbWMW_kmw4_Mykj7gYEDIIQs5PpX4cg_b1FPol_4kqS6EywmW1cPOfCcmI3EbWF7kfo"
-});
-const accessToken = oauth2Client.getAccessToken()
+
 
 const generateOtp=()=>{
     const len = 5
@@ -49,6 +46,11 @@ const createToken = (Id) => {
 }
 
 const sendOtp = (email,otp) => {
+
+    oauth2Client.setCredentials({
+        refresh_token: "1//04_Ad94FZfZmSCgYIARAAGAQSNwF-L9IrJbWMW_kmw4_Mykj7gYEDIIQs5PpX4cg_b1FPol_4kqS6EywmW1cPOfCcmI3EbWF7kfo"
+    });
+    const accessToken = oauth2Client.getAccessToken()
 
 
     var smtpTransport = nodemailer.createTransport({
@@ -88,6 +90,13 @@ const sendOtp = (email,otp) => {
 }
 
 const sendEmail = (req,email,uniqueString) => {
+
+    oauth2Client.setCredentials({
+        refresh_token: "1//04_Ad94FZfZmSCgYIARAAGAQSNwF-L9IrJbWMW_kmw4_Mykj7gYEDIIQs5PpX4cg_b1FPol_4kqS6EywmW1cPOfCcmI3EbWF7kfo"
+    });
+    const accessToken = oauth2Client.getAccessToken()
+
+
     var smtpTransport = nodemailer.createTransport({
         service: "gmail",
         auth: {
