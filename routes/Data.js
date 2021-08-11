@@ -78,7 +78,7 @@ router.get('/:sapId', requireAuth, async(req,res)=>{
     const { sapId } = req.params;
     const user = await Data.findOne({sap_Id:sapId})
 
-    const {sap_Id, name, contact_no, year_join, 
+    const {sap_Id, email, name, contact_no, year_join, 
       year_passed, profile_pic, contribution, 
       academic_cgpa,internshipsArray, projectArray, cultural_activities, 
       sports_activities, NSS_activities, linkedin, achievementsArray,
@@ -107,7 +107,7 @@ router.get('/:sapId', requireAuth, async(req,res)=>{
       })
     );
 
-    res.status(200).send({ sap_Id, name, contact_no, year_join, 
+    res.status(200).send({ sap_Id, email,name, contact_no, year_join, 
       year_passed, profile_pic, contribution, 
       academic_cgpa,internships, projects, cultural_activities, 
       sports_activities, NSS_activities, linkedin, achievements,
