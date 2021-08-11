@@ -73,6 +73,8 @@ router.get('/', requireAuth, async(req,res)=>{
 
 router.get('/:sapId', requireAuth, async(req,res)=>{
 
+  if(req.user.isAdmin){
+
     const { sapId } = req.params;
     const user = await Data.findOne({sap_Id:sapId})
 
@@ -111,6 +113,10 @@ router.get('/:sapId', requireAuth, async(req,res)=>{
       sports_activities, NSS_activities, linkedin, achievements,
       publications, further_contributions
     })
+
+  }else{
+    res.status(500).send("Only Admin is allowed to view profile of other students")
+  }
   
 })
 
