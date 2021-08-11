@@ -71,6 +71,49 @@ router.get('/', requireAuth, async(req,res)=>{
 
 })
 
+router.get('/:sapId', requireAuth, async(req,res)=>{
+
+    const { sapId } = req.params;
+    const user = await Data.find({sap_Id:sapId})
+
+    const {sap_Id, name, contact_no, year_join, 
+      year_passed, profile_pic, contribution, 
+      academic_cgpa,internshipsArray, projectArray, cultural_activities, 
+      sports_activities, NSS_activities, linkedin, achievementsArray,
+      publicationArray, further_contributions } = user
+
+
+  const projects = await Promise.all(
+      projectArray.map((projectId) => {
+        return Project.findById(projectId);
+      })
+    );
+  const internships = await Promise.all(
+      internshipsArray.map((internshipId) => {
+        return Internship.findById(internshipId);
+      })
+    );
+  const publications = await Promise.all(
+      publicationArray.map((publicationId) => {
+        return Publication.findById(publicationId);
+      })
+    );
+
+  const achievements = await Promise.all(
+      achievementsArray.map((achievementId) => {
+        return Achievement.findById(achievementId);
+      })
+    );
+
+    res.status(200).send({ sap_Id, name, contact_no, year_join, 
+      year_passed, profile_pic, contribution, 
+      academic_cgpa,internships, projects, cultural_activities, 
+      sports_activities, NSS_activities, linkedin, achievements,
+      publications, further_contributions
+    })
+  
+})
+
 router.post('/', requireAuth, async (req,res)=>{
 
     const { sap_Id, name, contact_no, year_join, 
