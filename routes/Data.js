@@ -74,7 +74,7 @@ router.get('/', requireAuth, async(req,res)=>{
 router.get('/:sapId', requireAuth, async(req,res)=>{
 
     const { sapId } = req.params;
-    const user = await Data.find({sap_Id:sapId})
+    const user = await Data.findOne({sap_Id:sapId})
 
     const {sap_Id, name, contact_no, year_join, 
       year_passed, profile_pic, contribution, 
