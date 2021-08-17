@@ -67,10 +67,16 @@ const createToken = (Id) => {
 const sendOtp = (email,otp) => {
 
     var smtpTransport = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
           user: 'chiragjain55551@gmail.com',
           pass: 'Jayshree@123'
+        },
+        tls: {
+            // do not fail on invalid certs
+            rejectUnauthorized: false
         }
       });
 
