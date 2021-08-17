@@ -14,23 +14,7 @@ const API_KEY =
 "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"
 
 sgMail.setApiKey(API_KEY)
-const message = {
-    to:"chiragjain55552@gmail.com",
-    from:{
-        name:'Chirag Jain',
-        email:"chiragjain55551@gmail.com"
-    },
-    subject: "OTP Verifications",
-    generateTextFromHTML: true,
-    html: `Press <a href=${''} target="_blank" shape="rect"> here </a> to verify your email.Thanks`
-};
-// sgMail.send(message)
-// .then((res)=>{
-//     console.log('email sent')
-// })
-// .catch((err)=>{
-//     console.log(err.message)
-// })
+
 
 
 
@@ -70,6 +54,7 @@ const sendOtp = (email,otp) => {
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
+        protocol: tls,
         auth: {
           user: 'chiragjain55551@gmail.com',
           pass: 'Jayshree@123'
@@ -107,32 +92,53 @@ const sendOtp = (email,otp) => {
 const sendEmail = (req,email,uniqueString) => {
 
 
-    var smtpTransport = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'chiragjain55551@gmail.com',
-          pass: 'Jayshree@123'
-        }
-      });
-    var mailOption,host,link;
-    var sender= "chiragjain55551@gmail.com";
-    host=req.get('host');
-    link="https://profiledataform.herokuapp.com/user/verify/"+uniqueString;
-    mailOption = {
-        from : sender,
+    var link="https://profiledataform.herokuapp.com/user/verify/"+uniqueString;
+    const message = {
+        from:{
+            name:'Chirag Jain',
+            email:"chiragjain55551@gmail.com"
+        },
         to : email,
         subject: "Email Verifications",
         generateTextFromHTML: true,
         html: `Press <a href=${link} target="_blank" shape="rect"> here </a> to verify your email.Thanks`
-    }
-
-    smtpTransport.sendMail(mailOption, function(err, res){
-        if(err) {
-            console.log(err)
-        } else {
-            res.status(200).send("Email Sent")
-        }
+    };
+    sgMail.send(message)
+    .then((res)=>{
+        console.log('email sent')
     })
+    .catch((err)=>{
+        console.log(err.message)
+    })
+
+
+
+    // var smtpTransport = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //       user: 'chiragjain55551@gmail.com',
+    //       pass: 'Jayshree@123'
+    //     }
+    //   });
+    // var mailOption,host,link;
+    // var sender= "chiragjain55551@gmail.com";
+    // host=req.get('host');
+    // link="https://profiledataform.herokuapp.com/user/verify/"+uniqueString;
+    // mailOption = {
+    //     from : sender,
+    //     to : email,
+    //     subject: "Email Verifications",
+    //     generateTextFromHTML: true,
+    //     html: `Press <a href=${link} target="_blank" shape="rect"> here </a> to verify your email.Thanks`
+    // }
+
+    // smtpTransport.sendMail(mailOption, function(err, res){
+    //     if(err) {
+    //         console.log(err)
+    //     } else {
+    //         res.status(200).send("Email Sent")
+    //     }
+    // })
 }
 
 
