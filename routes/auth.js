@@ -8,6 +8,33 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 let { requireAuth } = require("../middlewares/userMiddleware");
 var otpGenerator = require('otp-generator')
+var sgMail = require('@sendgrid/mail')
+
+const API_KEY =
+"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"
+
+sgMail.setApiKey(API_KEY)
+const message = {
+    to:"chiragjain55552@gmail.com",
+    from:{
+        name:'Chirag Jain',
+        email:"chiragjain55551@gmail.com"
+    },
+    subject: "OTP Verifications",
+    generateTextFromHTML: true,
+    html: `Press <a href=${''} target="_blank" shape="rect"> here </a> to verify your email.Thanks`
+};
+// sgMail.send(message)
+// .then((res)=>{
+//     console.log('email sent')
+// })
+// .catch((err)=>{
+//     console.log(err.message)
+// })
+
+
+
+
 
 
 const oauth2Client = new OAuth2(
@@ -39,26 +66,16 @@ const createToken = (Id) => {
 
 const sendOtp = (email,otp) => {
 
-    oauth2Client.setCredentials({
-        refresh_token: "1//04_Ad94FZfZmSCgYIARAAGAQSNwF-L9IrJbWMW_kmw4_Mykj7gYEDIIQs5PpX4cg_b1FPol_4kqS6EywmW1cPOfCcmI3EbWF7kfo"
-    });
-    const accessToken = oauth2Client.getAccessToken()
-
-
     var smtpTransport = nodemailer.createTransport({
-        service: "gmail",
+        service: 'gmail',
         auth: {
-             type: "OAuth2",
-             user: "chiragjain55551@gmail.com", 
-             clientId: "395033379952-57fhpv4j4p3qt5agl4nom1780c80khgp.apps.googleusercontent.com",
-             clientSecret: "NxaNI-apmrn6na0gO6lF57j9",
-             refreshToken: "1//04_Ad94FZfZmSCgYIARAAGAQSNwF-L9IrJbWMW_kmw4_Mykj7gYEDIIQs5PpX4cg_b1FPol_4kqS6EywmW1cPOfCcmI3EbWF7kfo",
-             accessToken: accessToken
-        },
-        tls: {
-            rejectUnauthorized: false
-          }
-    });
+          user: 'chiragjain55551@gmail.com',
+          pass: 'Jayshree@123'
+        }
+      });
+
+  
+
     var mailOption,host,link;
     var sender= "chiragjain55551@gmail.com";
     
@@ -83,26 +100,14 @@ const sendOtp = (email,otp) => {
 
 const sendEmail = (req,email,uniqueString) => {
 
-    oauth2Client.setCredentials({
-        refresh_token: "1//04_Ad94FZfZmSCgYIARAAGAQSNwF-L9IrJbWMW_kmw4_Mykj7gYEDIIQs5PpX4cg_b1FPol_4kqS6EywmW1cPOfCcmI3EbWF7kfo"
-    });
-    const accessToken = oauth2Client.getAccessToken()
-
 
     var smtpTransport = nodemailer.createTransport({
-        service: "gmail",
+        service: 'gmail',
         auth: {
-             type: "OAuth2",
-             user: "chiragjain55551@gmail.com", 
-             clientId: "395033379952-57fhpv4j4p3qt5agl4nom1780c80khgp.apps.googleusercontent.com",
-             clientSecret: "NxaNI-apmrn6na0gO6lF57j9",
-             refreshToken: "1//04_Ad94FZfZmSCgYIARAAGAQSNwF-L9IrJbWMW_kmw4_Mykj7gYEDIIQs5PpX4cg_b1FPol_4kqS6EywmW1cPOfCcmI3EbWF7kfo",
-             accessToken: accessToken
-        },
-        tls: {
-            rejectUnauthorized: false
-          }
-    });
+          user: 'chiragjain55551@gmail.com',
+          pass: 'Jayshree@123'
+        }
+      });
     var mailOption,host,link;
     var sender= "chiragjain55551@gmail.com";
     host=req.get('host');
@@ -230,6 +235,7 @@ router.post("/check-otp", async (req,res) => {
     if(user){
          
         if(user.otp === otp){
+            
             const millis = Date.now() - user.otpTimeLimit
             const seconds = Math.floor(millis / 1000)
             if(Number(seconds) < 120){
