@@ -98,7 +98,36 @@ const userSchema = new mongoose.Schema(
           further_contributions:{
             type:String,
             default:""
+          },
+          gre:{
+            type:String,
+            default:""
+          },
+          tofel:{
+            type:String,
+            default:""
+          },
+          ielts:{
+            type:String,
+            default:""
+          },
+          gate:{
+            type:String,
+            default:""
+          },
+          cat:{
+            type:String,
+            default:""
+          },
+          gmat:{
+            type:String,
+            default:""
+          },
+          resume:{
+            type:String,
+            default:""
           }
+          
 
     },
     { timestamps: true }

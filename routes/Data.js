@@ -31,7 +31,7 @@ router.get('/', requireAuth, async(req,res)=>{
         year_passed, profile_pic, contribution, 
         academic_cgpa,internshipsArray, projectArray, cultural_activities, 
         sports_activities, NSS_activities, linkedin, achievementsArray,
-        publicationArray, further_contributions } = req.user
+        publicationArray, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume } = req.user
 
 
     const projects = await Promise.all(
@@ -60,7 +60,7 @@ router.get('/', requireAuth, async(req,res)=>{
         year_passed, profile_pic, contribution, 
         academic_cgpa,internships, projects, cultural_activities, 
         sports_activities, NSS_activities, linkedin, achievements,
-        publications, further_contributions
+        publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume
       })
     }
 
@@ -82,7 +82,7 @@ router.get('/:sapId', requireAuth, async(req,res)=>{
       year_passed, profile_pic, contribution, 
       academic_cgpa,internshipsArray, projectArray, cultural_activities, 
       sports_activities, NSS_activities, linkedin, achievementsArray,
-      publicationArray, further_contributions } = user
+      publicationArray, further_contributions, gre, ielts, gate, cat, gmat, tofel } = user
 
 
   const projects = await Promise.all(
@@ -111,7 +111,7 @@ router.get('/:sapId', requireAuth, async(req,res)=>{
       year_passed, profile_pic, contribution, 
       academic_cgpa,internships, projects, cultural_activities, 
       sports_activities, NSS_activities, linkedin, achievements,
-      publications, further_contributions
+      publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel
     })
 
   }else{
@@ -126,7 +126,7 @@ router.post('/', requireAuth, async (req,res)=>{
             year_passed, profile_pic, contribution, 
             academic_cgpa,internships, projects, cultural_activities, 
             sports_activities, NSS_activities, linkedin, achievements,
-            publications, further_contributions
+            publications, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume
           } = await req.body ;
     let user = req.user
 
@@ -208,7 +208,7 @@ router.post('/', requireAuth, async (req,res)=>{
             year_passed, profile_pic, contribution, 
             academic_cgpa,internshipsArray, projectArray, cultural_activities, 
             sports_activities, NSS_activities, linkedin, achievementsArray,
-            publicationArray, further_contributions
+            publicationArray, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume
         }
 
         const data = await Data.findOneAndUpdate({sap_Id:sap_Id},{$set:userData},{ returnDocument: 'after' })
