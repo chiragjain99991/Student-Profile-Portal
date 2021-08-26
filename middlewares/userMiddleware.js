@@ -10,7 +10,7 @@ const requireAuth = async (req, res, next) => {
       jwt.verify(token, "profile portal project", async (err, decodedToken) => {
         if (err) {
           console.log(err.message);
-          res.send("incorrect token");
+          return res.status(500).send({msg:"incorrect token"});
         } else {
           console.log(decodedToken)
           let user = await User.findById(decodedToken.Id);
@@ -19,7 +19,7 @@ const requireAuth = async (req, res, next) => {
         }
       });
     } else {
-      res.send(401);
+      return res.status(401).send({msg:'Authentication required'});
     }
   };
 

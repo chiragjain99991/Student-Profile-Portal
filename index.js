@@ -1,24 +1,15 @@
+require('dotenv').config()
 const express = require("express");
 var app = express();
 let cookieParser = require("cookie-parser");
+const Dbconnect = require('./database')
 let cors = require("cors");
 let mongoose = require("mongoose");
-let dataRoute = require('./routes/Data')
+let dataRoute = require('./routes/data')
 let authRoute = require("./routes/auth")
 
+Dbconnect();
 
-mongoose.connect(
-    "mongodb+srv://chiragjain:Chirag123@profileform.7i853.mongodb.net/ProfileForm?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-    },
-    () => {
-      console.log("database started");
-    }
-);
 
 app.use(express.json());
 app.use(cookieParser());
