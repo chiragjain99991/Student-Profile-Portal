@@ -94,7 +94,7 @@ const sendEmail = (req,email,uniqueString) => {
             email:"chiragjain55551@gmail.com"
         },
         to : email,
-        subject: "Email Verifications",
+        subject: "Email Verification for profile portal made by IT Department of DJ Sanghvi",
         generateTextFromHTML: true,
         html: `Press <a href=${link} target="_blank" shape="rect"> here </a> to verify your email.Thanks`
     };
