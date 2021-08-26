@@ -54,14 +54,9 @@ const sendOtp = (email,otp) => {
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
-        protocol: tls,
         auth: {
           user: 'chiragjain55551@gmail.com',
           pass: 'Jayshree@123'
-        },
-        tls: {
-            // do not fail on invalid certs
-            rejectUnauthorized: false
         }
       });
 
