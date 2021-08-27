@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 function Dbconnect(){
 
-const DB_URL = process.env.DB_URL
+const DB_URL = "mongodb+srv://chiragjain:Chirag123@profileform.7i853.mongodb.net/ProfileForm?retryWrites=true&w=majority"
     
 mongoose.connect(DB_URL,
     {
