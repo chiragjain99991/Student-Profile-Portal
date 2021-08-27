@@ -4,6 +4,7 @@ var app = express();
 let cookieParser = require("cookie-parser");
 const Dbconnect = require('./database')
 let cors = require("cors");
+let dataRoute = require("./routes/data")
 let authRoute = require("./routes/auth")
 
 Dbconnect();
