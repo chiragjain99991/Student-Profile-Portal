@@ -1,6 +1,6 @@
-var sgMail = require('@sendgrid/mail')
-const API_KEY = process.env.SG_MAIL_API_KEY
-sgMail.setApiKey(API_KEY)
+var sgMail = require('@sendgrid/mail');
+const API_KEY1 = process.env.API_KEY ;
+sgMail.setApiKey(API_KEY1) ;
 
 module.exports =  (req,email,uniqueString) => {
 
