@@ -6,6 +6,7 @@ const Dbconnect = require('./database')
 let cors = require("cors");
 
 let authRoute = require("./routes/auth")
+let userRoute = require("./routes/user")
 
 Dbconnect();
 
@@ -20,6 +21,7 @@ app.get("/",(req,res)=>{
 
 
 app.use("/user",authRoute);
+app.use("/data",userRoute)
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("server started at 3000");
