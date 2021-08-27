@@ -4,7 +4,6 @@ var app = express();
 let cookieParser = require("cookie-parser");
 const Dbconnect = require('./database')
 let cors = require("cors");
-let mongoose = require("mongoose");
 let dataRoute = require('./routes/data')
 let authRoute = require("./routes/auth")
 
@@ -16,7 +15,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.get("/",(req,res)=>{
-    res.send("Your email is verified. You can go ahead with log in.")
+    res.send("Your email is verified. You can go ahead with log in.Please")
 })
 
 app.use("/data",dataRoute);
