@@ -89,9 +89,15 @@ class DataController{
           const { sapId } = req.params;
           const { sap_Id, year_join, year_passed } = req.body;
           const user = await Data.findOne({sap_Id:sapId})
+          
           if(user){
+            const alreadyuser = await Data.findOne({sap_Id:sap_Id})
+            if(alreadyuser){
+              res.status(500).send({msg:"This sap id is already associated with another account."})
+            } else {
             const user = await Data.findOneAndUpdate({sap_Id:sapId},{ sap_Id, year_join, year_passed })
             res.status(200).send({msg:`User with sapId ${sapId} edited successfully`})
+            }
           }else{
             return res.status(500).send({msg:"User not found"});
           }
