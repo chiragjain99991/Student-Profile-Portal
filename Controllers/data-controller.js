@@ -92,7 +92,7 @@ class DataController{
           
           if(user){
             const alreadyuser = await Data.findOne({sap_Id:sap_Id})
-            if(alreadyuser){
+            if(alreadyuser && Number(sapId) !== Number(sap_Id)){
               res.status(500).send({msg:"This sap id is already associated with another account."})
             } else {
             const user = await Data.findOneAndUpdate({sap_Id:sapId},{ sap_Id, year_join, year_passed })
