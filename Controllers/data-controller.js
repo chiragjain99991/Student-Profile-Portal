@@ -63,6 +63,43 @@ class DataController{
       
            
     }
+    async deleteUser(req,res){
+      if(req.user.isAdmin){
+          try{
+            
+            const { sapId } = req.params;
+            const user = await Data.findOne({sap_Id:sapId})
+            if(user){
+              await Data.findOneAndDelete({sap_Id:sapId})
+              res.status(200).send({msg:`User with sapId ${sapId} deleted successfully`})
+            }else{
+              return res.status(500).send({msg:"User not found"});
+            }
+          }catch(err){
+            return res.status(500).send({msg:err.message});
+          }
+      }else{
+           
+        res.status(500).send({msg:"Only Admin is allowed to delete profile of students"})
+      }
+    }
+    async editUser(req,res){
+      if(req.user.isAdmin){
+
+          const { sapId } = req.params;
+          const { sap_Id, year_join, year_passed } = req.body;
+          const user = await Data.findOne({sap_Id:sapId})
+          if(user){
+            const user = await Data.findOneAndUpdate({sap_Id:sapId},{ sap_Id, year_join, year_passed })
+            res.status(200).send({msg:`User with sapId ${sapId} edited successfully`})
+          }else{
+            return res.status(500).send({msg:"User not found"});
+          }
+      }else{
+           
+        res.status(500).send({msg:"Only Admin is allowed to edit profile of students"})
+      }
+    }
     async dataForAdmin(req,res){
         if(req.user.isAdmin){
 
@@ -208,7 +245,7 @@ class DataController{
     }catch(err){
 
     console.log(err);
-    res.status(500).send({msg:err.message});
+     return res.status(500).send({msg:err.message});
 
     }
 

@@ -8,7 +8,7 @@ const createToken = require("../Services/createToken")
 class AuthController{
     async register(req,res){
 
-        const {email,password,sap_Id} = req.body;
+        const { email, password, sap_Id, year_join, year_passed } = req.body;
         User.findOne({ sap_Id: req.body.sap_Id }, async function (err, user) {
             // error occur
             if(err){
@@ -25,7 +25,7 @@ class AuthController{
                     const isValid = false;
                     const salt = await bcrypt.genSalt();
                     const newPassword = await bcrypt.hash(password, salt);
-                    const newUser = new User({uniqueString, email,isValid,password:newPassword,sap_Id});
+                    const newUser = new User({ uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed });
                     await newUser.save();
                     sendEmail(req,email,uniqueString);
                     return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'});
@@ -38,7 +38,7 @@ class AuthController{
                 const isValid = false;
                 const salt = await bcrypt.genSalt();
                 const newPassword = await bcrypt.hash(password, salt);
-                const newUser = new User({uniqueString, email,isValid,password:newPassword,sap_Id});
+                const newUser = new User({uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed});
                 await newUser.save();
                 sendEmail(req,email,uniqueString);
                 return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'}); 

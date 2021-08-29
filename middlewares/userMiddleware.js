@@ -12,7 +12,6 @@ const requireAuth = async (req, res, next) => {
           console.log(err.message);
           return res.status(500).send({msg:"incorrect token"});
         } else {
-          console.log(decodedToken)
           let user = await User.findById(decodedToken.Id);
           req.user = user;
           next();
