@@ -55,7 +55,7 @@ class AuthController{
                         const newPassword = await bcrypt.hash(password, salt);
                         const newUser = new User({uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed});
                         await newUser.save();
-                        sendEmail(req,email,uniqueString);
+                        sendEmail(req,email,password,sap_Id,uniqueString);
                         userCreated.push(sap_Id)
                         return newUser
                     }
@@ -101,7 +101,7 @@ class AuthController{
                         const newPassword = await bcrypt.hash(password, salt);
                         const newUser = new User({ uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed });
                         await newUser.save();
-                        sendEmail(req,email,uniqueString);
+                        sendEmail(req,email,password,sap_Id,uniqueString);
                         return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'});
                     }               
                 }
