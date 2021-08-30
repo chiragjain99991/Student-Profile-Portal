@@ -10,7 +10,8 @@ class DataController{
         if(req.user.isAdmin){
        
             const allData = []
-            const data = await Data.find({ isAdmin: { $ne: true }},null,{sort:{'sap_Id':1}})
+            
+            const data = await Data.find({$and:[{ isAdmin: { $ne: true }},{ isValid: true }]},null,{sort:{'updatedAt':-1}})
             data.map( async (user)=>{
                   const {sap_Id, name, contact_no, year_join, year_passed, profile_pic} = user;
       

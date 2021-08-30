@@ -145,7 +145,6 @@ userSchema.statics.login = async function (sap_Id, password) {
   const user = await this.findOne({ sap_Id });
   // console.log(user)
   if (user) {
-    if(user.isValid){
 
       const validPassword = await bcrypt.compare(password, user.password);
       if (validPassword) {
@@ -153,10 +152,6 @@ userSchema.statics.login = async function (sap_Id, password) {
       } else {
         throw Error("password incorrect");
       }
-
-    }else{
-      throw Error("Email is not verified yet");
-    }
 
   } else {
     throw Error("user not found");
