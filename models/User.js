@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema(
             type:Boolean,
             default: false
           },
+          isUpdated:{
+            type:Boolean,
+            default: false
+          },
           uniqueString:{
             type: String,
             default: "",
@@ -150,11 +154,11 @@ userSchema.statics.login = async function (sap_Id, password) {
       if (validPassword) {
         return user;
       } else {
-        throw Error("password incorrect");
+        throw new Error("Invalid user Credentials");
       }
 
   } else {
-    throw Error("user not found");
+    throw new Error("User not found");
   }
 };
 

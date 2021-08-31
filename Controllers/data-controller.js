@@ -11,7 +11,7 @@ class DataController{
        
             const allData = []
             
-            const data = await Data.find({$and:[{ isAdmin: { $ne: true }},{ isValid: true }]},null,{sort:{'updatedAt':-1}})
+            const data = await Data.find({$and:[{ isAdmin: { $ne: true }},{ isValid: true },{ isUpdated: true}]},null,{sort:{'updatedAt':-1}})
             data.map( async (user)=>{
                   const {sap_Id, name, contact_no, year_join, year_passed, profile_pic} = user;
       
@@ -242,7 +242,7 @@ class DataController{
             year_passed, profile_pic, contribution, 
             academic_cgpa,internshipsArray, projectArray, cultural_activities, 
             sports_activities, NSS_activities, linkedin, achievementsArray,
-            publicationArray, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume
+            publicationArray, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume, isUpdated: true
         }
 
         const data = await Data.findOneAndUpdate({sap_Id:sap_Id},{$set:userData},{ returnDocument: 'after' })
