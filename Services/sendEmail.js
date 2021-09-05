@@ -31,11 +31,11 @@ module.exports =  (req,email,password,sap_Id,uniqueString) => {
         html: `<p style="font-size: 20px;" >Your registered Sap Id is: <b>${sap_Id}</b></p><p style="font-size: 20px;">Your password is: <b>${password}</b></p>`
     };
 
-    smtpTransport.sendMail(mailOption, function(err, res){
+    smtpTransport.sendMail(mailOption, function(err, response){
         if(err) {
-            return res.status(500).send({msg:err.message});
+            console.log(err)
         } else {
-            res.status(200).send("Email sent to registered email Id")
+            console.log("email sent")
         }
     })
 

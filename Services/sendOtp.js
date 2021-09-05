@@ -25,11 +25,11 @@ module.exports  = (email,otp) => {
         html: `YOUR OTP IS ${otp}`
     }
 
-    smtpTransport.sendMail(mailOption, function(err, res){
+    smtpTransport.sendMail(mailOption, function(err, response){
         if(err) {
-            return res.status(500).send({msg:err.message});
+            console.log(err)
         } else {
-            res.status(200).send("OTP HAS BEEN SENT TO YOUR REGISTERED EMAIL ID")
+            console.log("email sent")
         }
     })
 
