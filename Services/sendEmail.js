@@ -11,7 +11,7 @@ module.exports =  (req,email,password,sap_Id,uniqueString) => {
         secure: true,
         auth: {
           user: 'chiragjain55551@gmail.com',
-          pass: 'Jayshree@123'
+          pass: 'JayshreeJain@123'
         }
       });
 
