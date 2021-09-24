@@ -8,7 +8,7 @@ var generatePassword = require('password-generator');
 
 class AuthController{
     async register(req,res){
-
+        console.log(req.body)
         
         if(req.body.data.length !== 1){
 
@@ -81,7 +81,7 @@ class AuthController{
            
         }else{
 
-            const { email, password, sap_Id, year_join, year_passed } = req.body.data[0];
+            const { email, password, sap_Id, year_join, year_passed, isAdmin } = req.body.data[0];
             User.findOne({ sap_Id:  sap_Id }, async function (err, user) {
                 // error occur
                 if(err){
@@ -99,7 +99,7 @@ class AuthController{
                         const isValid = false;
                         const salt = await bcrypt.genSalt();
                         const newPassword = await bcrypt.hash(password, salt);
-                        const newUser = new User({ uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed });
+                        const newUser = new User({ uniqueString, email, isAdmin, isValid, password:newPassword, sap_Id, year_join, year_passed });
                         await newUser.save();
                         sendEmail(req,email,password,sap_Id,uniqueString);
                         return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'});
@@ -112,7 +112,7 @@ class AuthController{
                     const isValid = false;
                     const salt = await bcrypt.genSalt();
                     const newPassword = await bcrypt.hash(password, salt);
-                    const newUser = new User({uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed});
+                    const newUser = new User({uniqueString, email, isAdmin, isValid, password:newPassword, sap_Id, year_join, year_passed});
                     await newUser.save();
                     sendEmail(req,email,password,sap_Id,uniqueString);
                     return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'}); 
