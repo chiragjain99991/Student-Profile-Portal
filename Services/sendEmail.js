@@ -10,20 +10,20 @@ module.exports =  (req,email,password,sap_Id,uniqueString) => {
         port: 465,
         secure: true,
         auth: {
-          user: 'chiragjain55551@gmail.com',
-          pass: 'JayshreeJain@123'
+          user: 'djsceItDepartment@gmail.com',
+          pass: 'Pass@123'
         }
       });
 
   
 
     var mailOption,host,link;
-    var sender= "chiragjain55551@gmail.com";
+    var sender= "djsceitdepartment@gmail.com";
 
     mailOption = {
         from:{
             name:'Chirag Jain',
-            email:"chiragjain55551@gmail.com"
+            email:"djsceitdepartment@gmail.com"
         },
         to : email,
         subject: "Email Verification for profile portal made by IT Department of DJ Sanghvi",
