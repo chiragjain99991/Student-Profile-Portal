@@ -6,15 +6,15 @@ module.exports  = (email,otp) => {
         port: 465,
         secure: true,
         auth: {
-          user: 'chiragjain55551@gmail.com',
-          pass: 'JayshreeJain@123'
-        }
+            user: 'djsceItDepartment@gmail.com',
+            pass: 'Pass@123'
+          }
       });
 
   
 
     var mailOption,host,link;
-    var sender= "chiragjain55551@gmail.com";
+    var sender= "djsceItDepartment@gmail.com";
     
     
     mailOption = {

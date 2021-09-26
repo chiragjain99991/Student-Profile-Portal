@@ -18,13 +18,10 @@ module.exports =  (req,email,password,sap_Id,uniqueString) => {
   
 
     var mailOption,host,link;
-    var sender= "djsceitdepartment@gmail.com";
+    var sender= "djsceItDepartment@gmail.com";
 
     mailOption = {
-        from:{
-            name:'Chirag Jain',
-            email:"djsceitdepartment@gmail.com"
-        },
+        from : sender,
         to : email,
         subject: "Email Verification for profile portal made by IT Department of DJ Sanghvi",
         generateTextFromHTML: true,
