@@ -7,7 +7,7 @@ module.exports  = (email,otp) => {
         secure: true,
         auth: {
             user: 'djsceItDepartment@gmail.com',
-            pass: 'Pass@123'
+            pass: 'glanrkrzzwzctaam'
           }
       });
 
