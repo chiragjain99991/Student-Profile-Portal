@@ -65,7 +65,7 @@ class DataController{
            
     }
     async deleteUser(req,res){
-      if(req.user.isAdmin){
+      if(req.user.isAdmin && req.user.isSuperAdmin){
           try{
             
             const { sapId } = req.params;
@@ -81,11 +81,11 @@ class DataController{
           }
       }else{
            
-        res.status(500).send({msg:"Only Admin is allowed to delete profile of students"})
+        res.status(500).send({msg:"Only Super Admin is allowed to delete profile of students"})
       }
     }
     async editUser(req,res){
-      if(req.user.isAdmin){
+      if(req.user.isAdmin && req.user.isSuperAdmin){
 
           const { sapId } = req.params;
           const { sap_Id, year_join, year_passed } = req.body;
@@ -104,7 +104,7 @@ class DataController{
           }
       }else{
            
-        res.status(500).send({msg:"Only Admin is allowed to edit profile of students"})
+        res.status(500).send({msg:"Only Super Admin is allowed to edit profile of students"})
       }
     }
     async dataForAdmin(req,res){
@@ -153,6 +153,38 @@ class DataController{
            
             res.status(500).send({msg:"Only Admin is allowed to view profile of students"})
           }
+    }
+
+    async getAllDocuments(req, res){
+      if(req.user.isAdmin && req.user.isSuperAdmin){
+        const documents = [];
+
+
+        const internships = await Internship.find();
+        internships.map((internship)=>{
+          documents.push(internship.proof_link)
+        })
+
+
+        const achievements = await Achievement.find();
+        achievements.map((achievement)=>{
+          documents.push(achievement.proof_link)
+        })
+
+        const users = await Data.find();
+        users.map((user)=>{
+          if(user.resume !== ""){
+            documents.push(user.resume)
+          }
+          
+        })
+
+
+        res.status(200).send({documents})
+       
+      }else{      
+        res.status(500).send({msg:"Only Super Admin is allowed to view all documents"});
+      }
     }
 
     async postData(req,res){

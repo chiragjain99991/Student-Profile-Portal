@@ -24,17 +24,13 @@ class AuthController{
                     if(err){
                         return res.status(500).send({msg: err.message});
                     }
-                    // if email is exist into database i.e. email is associated with another user.
-                    else if (user) {
-            
-                        if(user.isValid){
-                           
+                    else{
+                        if(user && user.isValid){
                             return {sap_Id:"already exists"}
-                            // console.log('jsj',alreadyexist)
-                            // return res.status(400).send({msg:'This sap id is already associated with another account.'});
-                        }
-                        else{
-                            await User.findOneAndDelete({sap_Id});
+                        }else{
+                            if(user){
+                                await User.findOneAndDelete({sap_Id});
+                            }
                             const uniqueString = generateString();
                             const isValid = false;
                             const salt = await bcrypt.genSalt();
@@ -44,21 +40,43 @@ class AuthController{
                             sendEmail(req,email,password,sap_Id,uniqueString);
                             userCreated.push(sap_Id)
                             return newUser
-                        }               
+                        }
                     }
-                    // if user is not exist into database then save the user into database for register account
-                    else{
+                    // if email is exist into database i.e. email is associated with another user.
+                    // else if (user) {
             
-                        const uniqueString = generateString();
-                        const isValid = false;
-                        const salt = await bcrypt.genSalt();
-                        const newPassword = await bcrypt.hash(password, salt);
-                        const newUser = new User({uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed});
-                        await newUser.save();
-                        sendEmail(req,email,password,sap_Id,uniqueString);
-                        userCreated.push(sap_Id)
-                        return newUser
-                    }
+                    //     if(user.isValid){
+                           
+                    //         return {sap_Id:"already exists"}
+                    //         // console.log('jsj',alreadyexist)
+                    //         // return res.status(400).send({msg:'This sap id is already associated with another account.'});
+                    //     }
+                    //     else{
+                    //         await User.findOneAndDelete({sap_Id});
+                    //         const uniqueString = generateString();
+                    //         const isValid = false;
+                    //         const salt = await bcrypt.genSalt();
+                    //         const newPassword = await bcrypt.hash(password, salt);
+                    //         const newUser = new User({ uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed });
+                    //         await newUser.save();
+                    //         sendEmail(req,email,password,sap_Id,uniqueString);
+                    //         userCreated.push(sap_Id)
+                    //         return newUser
+                    //     }               
+                    // }
+                    // // if user is not exist into database then save the user into database for register account
+                    // else{
+            
+                    //     const uniqueString = generateString();
+                    //     const isValid = false;
+                    //     const salt = await bcrypt.genSalt();
+                    //     const newPassword = await bcrypt.hash(password, salt);
+                    //     const newUser = new User({uniqueString, email, isValid, password:newPassword, sap_Id, year_join, year_passed});
+                    //     await newUser.save();
+                    //     sendEmail(req,email,password,sap_Id,uniqueString);
+                    //     userCreated.push(sap_Id)
+                    //     return newUser
+                    // }
 
                     
 
@@ -87,14 +105,13 @@ class AuthController{
                 if(err){
                     return res.status(500).send({msg: err.message});
                 }
-                // if email is exist into database i.e. email is associated with another user.
-                else if (user) {
-        
-                    if(user.isValid){
+                else{
+                    if(user && user.isValid){
                         return res.status(400).send({msg:'This sap id is already associated with another account.'});
-                    }
-                    else{
-                        await User.findOneAndDelete({sap_Id});
+                    }else{
+                        if(user){
+                            await User.findOneAndDelete({sap_Id});
+                        }
                         const uniqueString = generateString();
                         const isValid = false;
                         const salt = await bcrypt.genSalt();
@@ -103,20 +120,38 @@ class AuthController{
                         await newUser.save();
                         sendEmail(req,email,password,sap_Id,uniqueString);
                         return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'});
-                    }               
+                    }
                 }
-                // if user is not exist into database then save the user into database for register account
-                else{
+                // if email is exist into database i.e. email is associated with another user.
+                // else if (user) {
         
-                    const uniqueString = generateString();
-                    const isValid = false;
-                    const salt = await bcrypt.genSalt();
-                    const newPassword = await bcrypt.hash(password, salt);
-                    const newUser = new User({uniqueString, email, isAdmin, isValid, password:newPassword, sap_Id, year_join, year_passed});
-                    await newUser.save();
-                    sendEmail(req,email,password,sap_Id,uniqueString);
-                    return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'}); 
-                }
+                //     if(user.isValid){
+                //         return res.status(400).send({msg:'This sap id is already associated with another account.'});
+                //     }
+                //     else{
+                //         await User.findOneAndDelete({sap_Id});
+                //         const uniqueString = generateString();
+                //         const isValid = false;
+                //         const salt = await bcrypt.genSalt();
+                //         const newPassword = await bcrypt.hash(password, salt);
+                //         const newUser = new User({ uniqueString, email, isAdmin, isValid, password:newPassword, sap_Id, year_join, year_passed });
+                //         await newUser.save();
+                //         sendEmail(req,email,password,sap_Id,uniqueString);
+                //         return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'});
+                //     }               
+                // }
+                // // if user is not exist into database then save the user into database for register account
+                // else{
+        
+                //     const uniqueString = generateString();
+                //     const isValid = false;
+                //     const salt = await bcrypt.genSalt();
+                //     const newPassword = await bcrypt.hash(password, salt);
+                //     const newUser = new User({uniqueString, email, isAdmin, isValid, password:newPassword, sap_Id, year_join, year_passed});
+                //     await newUser.save();
+                //     sendEmail(req,email,password,sap_Id,uniqueString);
+                //     return res.status(200).send({msg:'Verify the email account through mail sent on registered email.'}); 
+                // }
             })  
     }
 
@@ -136,11 +171,7 @@ class AuthController{
           }
     }
     async isAdmin(req,res){
-        if(req.user.isAdmin){
-            return res.status(200).send({isAdmin:true});
-        }else{
-            return res.status(200).send({isAdmin:false});
-        }
+        return res.status(200).send({isAdmin: req.user.isAdmin, isSuperAdmin: req.user.isSuperAdmin});     
     }
     async verifymail(req,res){
         const { uniqueString } = req.params;

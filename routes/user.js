@@ -9,6 +9,7 @@ router.get('/:sapId', requireAuth, DataController.dataForAdmin)
 router.post('/', requireAuth, DataController.postData)
 router.post('/:sapId', requireAuth, DataController.editUser)
 router.delete("/:sapId",requireAuth,DataController.deleteUser)
+router.get("/superAdmin/getAllFiles", requireAuth, DataController.getAllDocuments)
 
 
 
