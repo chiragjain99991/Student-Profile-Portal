@@ -176,6 +176,10 @@ class DataController{
           if(user.resume !== ""){
             documents.push(user.resume)
           }
+
+          if(user.profile_pic !== ""){
+            documents.push(user.profile_pic)
+          }
           
         })
 
