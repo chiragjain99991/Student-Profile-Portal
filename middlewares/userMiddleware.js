@@ -7,7 +7,7 @@ const requireAuth = async (req, res, next) => {
   
     if (AuthHeader) {
       const token = AuthHeader.split(" ")[1];
-      jwt.verify(token, "profile portal project", async (err, decodedToken) => {
+      jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, async (err, decodedToken) => {
         if (err) {
           console.log(err.message);
           return res.status(500).send({msg:"incorrect token"});
