@@ -19,16 +19,21 @@ class CgpaController{
         }else{
            
             res.status(500).send({msg:"Only Super Admin is allowed to create cgpa"})
-          }
+        }
     }
     async getCgpa(req, res){
-        const { year } = req.params;
-        try{
-            const cgpa = await Cgpa.find({ year });
-            return res.status(200).send({cgpa});
+        if(req.user.isAdmin && req.user.isSuperAdmin){
+            try{
+                const cgpas = await Cgpa.find({},null, {sort:{'year':-1}});
+                return res.status(200).send({cgpas});
 
-        }catch(err){
-            return res.status(500).send({msg:err.message});
+            }catch(err){
+                return res.status(500).send({msg:err.message});
+            }
+        }else{
+            
+            res.status(500).send({msg:"Only Super Admin is allowed to edit cgpa"})
+
         }
         
     }

@@ -3,6 +3,7 @@ const Internship = require('../models/internships')
 const Project = require('../models/projects')
 const Publication = require('../models/publication')
 const Achievement = require('../models/achievements')
+const Cgpa = require("../models/cgpa");
 
 class DataController{
 
@@ -11,7 +12,7 @@ class DataController{
        
             const allData = []
             
-            const data = await Data.find({$and:[{ isAdmin: { $ne: true }},{ isValid: true },{ isUpdated: true}]},null,{sort:{'updatedAt':-1}})
+            const data = await Data.find({$and:[{ isAdmin: { $ne: true }},{ isSuperAdmin: { $ne: true }},{ isValid: true },{ isUpdated: true}]},null,{sort:{'updatedAt':-1}})
             data.map( async (user)=>{
                   const {sap_Id, name, contact_no, year_join, year_passed, profile_pic} = user;
       
@@ -25,11 +26,14 @@ class DataController{
             
       
           } else {
+
             const {sap_Id, name, contact_no, year_join, 
               year_passed, profile_pic, contribution, 
               academic_cgpa,internshipsArray, projectArray, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievementsArray,
               publicationArray, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume } = req.user
+
+            const cgpaObject = await Cgpa.find({year: year_passed})
       
       
           const projects = await Promise.all(
@@ -58,8 +62,8 @@ class DataController{
               year_passed, profile_pic, contribution, 
               academic_cgpa,internships, projects, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievements,
-              publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume
-            })
+              publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume, cgpaObject
+            });
           }
       
            
