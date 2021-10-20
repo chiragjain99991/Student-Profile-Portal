@@ -23,9 +23,9 @@ module.exports =  (req,email,password,sap_Id,uniqueString) => {
     mailOption = {
         from : sender,
         to : email,
-        subject: "Email Verification for profile portal made by IT Department of DJ Sanghvi",
+        subject: "Registration for student profile portal made by Information Technology Department of Dwarkadas J. Sanghvi College of Engineering",
         generateTextFromHTML: true,
-        html: `<p style="font-size: 20px;" >Your registered Sap Id is: <b>${sap_Id}</b></p><p style="font-size: 20px;">Your password is: <b>${password}</b></p>`
+        html: `<p style="font-size: 23px;"><b>DJSCE-INFORMATION TECHNOLOGY</b></p> </br><p style="font-size: 23px;"><b>STUDENT PROFILE PORTAL</b></p></br><p style="font-size: 20px;" >YOUR CREDENTIALS ARE:</p> </br>   <p style="font-size: 20px;" >SAP ID: <b>${sap_Id}</b></p><p style="font-size: 20px;">PASSWORD: <b>${password}</b></p>`
     };
 
     smtpTransport.sendMail(mailOption, function(err, response){

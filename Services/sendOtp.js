@@ -20,9 +20,9 @@ module.exports  = (email,otp) => {
     mailOption = {
         from : sender,
         to : email,
-        subject: "OTP Verifications",
+        subject: "OTP Verification for changing password of your account on student profile portal made by Information Technology Department of Dwarkadas J. Sanghvi College of Engineering",
         generateTextFromHTML: true,
-        html: `YOUR OTP IS ${otp}`
+        html: `<p style="font-size: 23px;"><b>DJSCE-INFORMATION TECHNOLOGY</b></p> </br><p style="font-size: 23px;"><b>STUDENT PROFILE PORTAL</b></p> </br> <p style="font-size: 20px;" >YOUR OTP IS <b>${otp}<b></p>`
     }
 
     smtpTransport.sendMail(mailOption, function(err, response){
