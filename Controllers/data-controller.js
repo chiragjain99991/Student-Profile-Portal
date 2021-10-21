@@ -31,7 +31,7 @@ class DataController{
               year_passed, profile_pic, contribution, 
               academic_cgpa,internshipsArray, projectArray, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievementsArray,
-              publicationArray, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume } = req.user
+              publicationArray, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume, email } = req.user
 
             const cgpaObject = await Cgpa.find({year: year_passed})
       
@@ -62,7 +62,7 @@ class DataController{
               year_passed, profile_pic, contribution, 
               academic_cgpa,internships, projects, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievements,
-              publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume, cgpaObject
+              publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume, cgpaObject, email
             });
           }
       
@@ -200,7 +200,7 @@ class DataController{
             year_passed, profile_pic, contribution, 
             academic_cgpa,internships, projects, cultural_activities, 
             sports_activities, NSS_activities, linkedin, achievements,
-            publications, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume
+            publications, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume, email
           } = await req.body ;
     let user = req.user
 
@@ -282,7 +282,7 @@ class DataController{
             year_passed, profile_pic, contribution, 
             academic_cgpa,internshipsArray, projectArray, cultural_activities, 
             sports_activities, NSS_activities, linkedin, achievementsArray,
-            publicationArray, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume, isUpdated: true
+            publicationArray, further_contributions,  email, gre, ielts, gate, cat, gmat, tofel, resume, isUpdated: true
         }
 
         const data = await Data.findOneAndUpdate({sap_Id:sap_Id},{$set:userData},{ returnDocument: 'after' })
