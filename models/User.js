@@ -91,6 +91,10 @@ const userSchema = new mongoose.Schema(
             type:Array,
             default:[]
           },
+          courseraArray:{
+            type:Array,
+            default:[]
+          },
           projectArray:{
             type:Array,
             default:[]

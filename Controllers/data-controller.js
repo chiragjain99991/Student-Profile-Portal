@@ -3,6 +3,7 @@ const Internship = require('../models/internships')
 const Project = require('../models/projects')
 const Publication = require('../models/publication')
 const Achievement = require('../models/achievements')
+const Coursera = require("../models/coursera")
 const Cgpa = require("../models/cgpa");
 
 class DataController{
@@ -31,7 +32,7 @@ class DataController{
               year_passed, profile_pic, contribution, 
               academic_cgpa,internshipsArray, projectArray, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievementsArray,
-              publicationArray, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume, email } = req.user
+              publicationArray, further_contributions, courseraArray, gre, ielts, gate, cat, gmat, tofel, resume, email } = req.user
 
             const cgpaObject = await Cgpa.find({year: year_passed})
       
@@ -46,6 +47,13 @@ class DataController{
                 return Internship.findById(internshipId);
               })
             );
+
+            const coursera = await Promise.all(
+              courseraArray.map((courseId) => {
+                return Coursera.findById(courseId);
+              })
+            );
+            
           const publications = await Promise.all(
               publicationArray.map((publicationId) => {
                 return Publication.findById(publicationId);
@@ -60,7 +68,7 @@ class DataController{
       
             res.status(200).send({ sap_Id, name, contact_no, year_join, 
               year_passed, profile_pic, contribution, 
-              academic_cgpa,internships, projects, cultural_activities, 
+              academic_cgpa,internships, coursera, projects, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievements,
               publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume, cgpaObject, email
             });
@@ -119,7 +127,7 @@ class DataController{
         
             const {sap_Id, email, name, contact_no, year_join, 
               year_passed, profile_pic, contribution, 
-              academic_cgpa,internshipsArray, projectArray, cultural_activities, 
+              academic_cgpa,internshipsArray, courseraArray, projectArray, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievementsArray,
               publicationArray, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume } = user
         
@@ -132,6 +140,11 @@ class DataController{
           const internships = await Promise.all(
               internshipsArray.map((internshipId) => {
                 return Internship.findById(internshipId);
+              })
+            );
+            const coursera = await Promise.all(
+              courseraArray.map((courseId) => {
+                return Coursera.findById(courseId);
               })
             );
           const publications = await Promise.all(
@@ -148,7 +161,7 @@ class DataController{
         
             res.status(200).send({ sap_Id, email,name, contact_no, year_join, 
               year_passed, profile_pic, contribution, 
-              academic_cgpa,internships, projects, cultural_activities, 
+              academic_cgpa,internships, coursera, projects, cultural_activities, 
               sports_activities, NSS_activities, linkedin, achievements,
               publications, further_contributions,  gre, ielts, gate, cat, gmat, tofel, resume
             })
@@ -198,7 +211,7 @@ class DataController{
     async postData(req,res){
         const { sap_Id, name, contact_no, year_join, 
             year_passed, profile_pic, contribution, 
-            academic_cgpa,internships, projects, cultural_activities, 
+            academic_cgpa,internships, coursera, projects, cultural_activities, 
             sports_activities, NSS_activities, linkedin, achievements,
             publications, further_contributions, gre, ielts, gate, cat, gmat, tofel, resume, email
           } = await req.body ;
@@ -207,6 +220,23 @@ class DataController{
     if(user.sap_Id === sap_Id){
 
       try{
+
+        let courseraArray = [];
+        coursera.map( async (course)=>{
+            const {  course_name, university, duration, sem, cert_link, level } = course;
+            if(course._id){
+                courseraArray.push(course._id);
+                const data = { course_name, university, duration, sem, cert_link, level }
+                const res = await Coursera.findOneAndUpdate({_id:course._id},{$set:data},{ returnDocument: 'after' })
+                
+            }else{
+                const res = new Coursera({course_name, university, duration, sem, cert_link, level})
+                courseraArray.push(res._id);
+                await res.save();
+            }
+            
+            
+        })
 
         let internshipsArray = [];
         internships.map( async (internship)=>{
@@ -280,7 +310,7 @@ class DataController{
         const userData = {
             sap_Id, name, contact_no, year_join, 
             year_passed, profile_pic, contribution, 
-            academic_cgpa,internshipsArray, projectArray, cultural_activities, 
+            academic_cgpa, internshipsArray, courseraArray, projectArray, cultural_activities, 
             sports_activities, NSS_activities, linkedin, achievementsArray,
             publicationArray, further_contributions,  email, gre, ielts, gate, cat, gmat, tofel, resume, isUpdated: true
         }
